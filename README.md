@@ -24,10 +24,10 @@ Sunucuya sağ tıklayıp Create Database'yi seçerek DB oluşturabilirsiniz.
 <img src="imgdb1.png"/>
 
 DB'yi oluşturduktan sonra seçimi genişletip Collections'a sağ tıklayıp Create Collection ile Koleksiyon oluşturabilirsiniz
-<img src="imgcol1.png"/>
+<img src="mycol1.png"/>
 Koleksiyon oluşturduktan sonra ilgili koleksiyona sağ tıklayıp Insert Document'i seçerek koleksiyona doküman ekleyebilirsiniz. 
 Aynı menü üzerinden doküman silme, güncelleme ve istatisklerine de bakabilirsiniz.
-<img src="imgdoc1.png"/>
+<img src="mydoc1.png"/>
 
 <h1>Temel işlemler</h1>
 
