@@ -34,7 +34,7 @@ Aynı menü üzerinden doküman silme, güncelleme ve istatisklerine de bakabili
 <h1>Temel işlemler</h1>
 
 <h2>1) Insert (Kayıt ekleme)</h2>
-<code>
+```
 
 db.getCollection('Test').insert({
     Name:"Berk",
@@ -43,10 +43,11 @@ db.getCollection('Test').insert({
 })
 
 //db.getSiblingDb("DBName").getCollection("colname") //... ile mevcut kullandığınız database'den farklı bir DB'de işlem yapabilirsiniz.
-</code>
+```
 <h2>2) Find Metodu</h2>
 
 <h3>a) Classical</h3>
+```
 // tüm kayıtları getirmek için
 db.getCollection('Test').find({})
 
@@ -57,57 +58,62 @@ db.getCollection('Test').find({Name:"Berk"})
 
 db.getCollection('Test').find({Name:/e/}) // içinde e geçenler
 db.getCollection('Test').find({Name:/e/i}) // içinde e ve E geçenler (i) incasesensitive
-
+```
 <h3>b) projection</h3>
+```
 // sadece belirli fieldları göstermek için
 db.getCollection('Test').find({Name:/E/i},{Name:1,_id:0})
-
+```
 <h3>c) sort</h3>
+```
 // herhangi bir alana göre sıralama yapmak için
 db.getCollection('Test').find({}).sort({CreatedAt:1})
-
+```
 <h3>d) limit ve skip</h3>
+```
 //belirli bir sayıda kayıt çekmek için
 db.getCollection('Test').find({}).limit(2)
 
 // belirli bir aralıktaki kayıtları getirmek için
 db.getCollection('Test').find({}).skip(2).limit(2)
-
+```
 <h3>e) find sırasında and ve or kullanımı </h3>
-
+```
 db.getCollection('Test').find({
     
     $and:[{Name:/e/i,CityId:3}]
 
     }).sort({created_at:-1})
 
-
+```
 <h2>3) Update</h2>
 
 <h3>a) Standart update</h3>
-
+```
 // bulunan ilk kayıtı değiştir
 db.getCollection('Test').update({},{$set:{"CityId":0}})
-
+```
 <h3>b) Çoklu update</h3>
+```
 // bütün kayıtları değiştir
 db.getCollection('Test').update({},{$set:{"CityId":0}},{multi:true})
-
+```
 <h3>c) object ekleme</h3>
-
+```
 //belirli bir alana obje ekle
 
 db.getCollection('Test').update({Name:"Berk"},{$set:{"Gender":"e"}},{multi:true})
-
+```
 <h2>4) Delete</h2>
-
+```
 // belirli bir dokümanı sil
 db.getCollection('Test').remove({Name:"Berk"})
 
 // tüm dokümanları sil
 db.getCollection('Test').remove({})
-
+```
 <h2>5) Aggregate</h2>
+```
 //isim alanında aynı olanları grupla ve say
 db.getCollection('Test').runCommand('aggregate',
         {pipeline: [
@@ -127,14 +133,15 @@ db.getCollection('Test').runCommand('aggregate',
                     {$limit: 10}
                     ],
         allowDiskUse: true})
-
+```
 <h2>6) Create Index</h2>
+```
 // azalan index oluştur
 
 db.getCollection('FollowerTweet').createIndex({created_at:-1})
-
+```
 <h2>7) Map Reduce</h2>
-
+```
 var map=function()
 {
     var textArr=this.text.split(' ');
@@ -159,7 +166,7 @@ db.getCollection('Test').mapReduce(map,reduce,
     query:{$and:[{text:{$not:/RT @/}},{text:/@/},{text:{$not:/aracılığıyla/}}]},
     out:accounts[i]+"_Mentions"
 });
-
+```
 
 
 <h1>C# driver</h1>
@@ -168,10 +175,10 @@ db.getCollection('Test').mapReduce(map,reduce,
 <img src="nuget.png"/>
 
 <h2>1) Initilaziton</h2>
-
+```
 MongoClient mc=new MongoClient(); //localde kurulu olan mongodb ye default port üzerinden bağlantı yapmak için
 MongoClient mc=new MongoClient("mongodb://1.1.1.1); //uzak sunucuda kurulu olan mongodb ye default port üzerinden bağlantı yapmak için
-
+```
 
 <h2>2) Insert BsonDocument</h2>
 ```
@@ -198,24 +205,85 @@ MongoClient mc=new MongoClient("mongodb://1.1.1.1); //uzak sunucuda kurulu olan 
 ```
 
 <h2>4) Find</h2>
+```
+            MongoClient mc = new MongoClient();
+            var db = mc.GetDatabase("Test");
+            var col = db.GetCollection<BsonDocument>("Brand");
+            var brandBson = col.FindAsync(new BsonDocument{}).Result.FirstOrDefault();
+```
 
 <h2>5) Find Complex Query Building</h2>
+```
+            MongoClient mc = new MongoClient();
+            var db = mc.GetDatabase("Test");
+            var col = db.GetCollection<BsonDocument>("Brand");
+            var filter = Builders<BsonDocument>.Filter.Eq("Id", 1);
+            var f= Builders<BsonDocument>.Filter.Empty;
+            if (true)
+            {
+            f = f & Builders<BsonDocument>.Filter.Eq("Name", "a");
+            }
+            var brandBson = col.FindAsync(f).Result.FirstOrDefault();
+```
 
 <h3>a) Projection</h3>
-
-<h3>b) Limit</h3>
-
+```
+            MongoClient mc = new MongoClient();
+            var db = mc.GetDatabase("Test");
+            var col = db.GetCollection<Brand>("Brand");
+            var filter = Builders<Brand>.Filter.Eq("Id", 1);
+            var projection = Builders<Brand>.Projection.Include("Name");
+            var brand = col.Find(filter).Project(projection)
+```
+<h3>b) Limit & Skip</h3>
+```
+            MongoClient mc = new MongoClient();
+            var db = mc.GetDatabase("Test");
+            var col = db.GetCollection<Brand>("Brand");
+            var filter = Builders<Brand>.Filter.Eq("Id", 1);
+            var projection = Builders<Brand>.Projection.Include("Name");
+            var sort = Builders<Brand>.Sort.Descending("Name");
+            var brand = col.Find(filter).Project(projection).Sort(sort).Skip(2).Limit(2);
+```
 <h3>c) Sort</h3>
-
+```
+            MongoClient mc = new MongoClient();
+            var db = mc.GetDatabase("Test");
+            var col = db.GetCollection<Brand>("Brand");
+            var filter = Builders<Brand>.Filter.Eq("Id", 1);
+            var projection = Builders<Brand>.Projection.Include("Name");
+            var sort = Builders<Brand>.Sort.Descending("Name");
+            var brand = col.Find(filter).Project(projection).Sort(sort);
+```
 <h2>6) Update</h2>
+```
+            MongoClient mc = new MongoClient();
+            var db3 = mc.GetDatabase("Test");
 
+            var col = db3.GetCollection<Brand>("Brand");
+            var filt = Builders<Brand>.Filter.Eq("Id", 1);
+            var upd = Builders<Brand>.Update.Set("Name", "Test1");
+            col.UpdateManyAsync(filt, upd).Wait();
+ ```
 <h2>7) Delete</h2>
+```
+            MongoClient mc = new MongoClient();
+            var db = mc.GetDatabase("Test");
+           
+            var col = db.GetCollection<Brand>("Brand");
 
+            var filt = Builders<Brand>.Filter.Eq("Id", 1);
+
+            col.DeleteOne(filt);
+```
 <h2>8) Aggregate</h2>
-
-<h2>9) Connection string</h2>
-
-
+```
+     var agbrands = new MongoClient().GetDatabase("Banks").GetCollection<BsonDocument>("albarakacomtr_FollowerTweet")
+                .Aggregate().Group(
+                new BsonDocument { { "_id", "$url.expanded_url" },
+                    { "count", new BsonDocument("$sum", 1) } }).ToListAsync().Result;
+           
+```
 
 
 
