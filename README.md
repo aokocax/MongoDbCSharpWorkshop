@@ -5,8 +5,10 @@
 <h1>Temel mongodb işlemleri</h1>
 
 <h2>Terminal üzerinden </h2>
-Sunucu üzerinden daha çok GUI'e sahip istemciler kullansak da terminal üzerinden de MongoDB'yi çalıştırabileceğiniz göstermek adına temel terminal komutlarını sıralayalım.
-windows sunucuları üzerinde mongodb c:\programfiles\mongodb\server\3.x\bin dizininde kuruluyor mongod.exe dosyasını çalıştırarak serveri başlattıktan sonra mongo.exe'yi çalıştırarak terminal üzerinden mongodb komut setlerini girebilirsiniz.
+Sunucu üzerinden daha çok GUI'e sahip istemciler kullansak da terminal üzerinden de MongoDB'yi çalıştırabileceğiniz. 
+Daha iyi anlamak adına temel terminal komutlarını sıralayalım.
+Windows sunucuları üzerinde mongodb c:\programfiles\mongodb\server\3.x\bin dizininde kuruluyor. 
+mongod.exe dosyasını çalıştırarak serveri başlattıktan sonra mongo.exe'yi çalıştırarak terminal üzerinden mongodb komut setlerini girebilirsiniz.
 
 <ul>
 <li>show dbs //tüm databaseleri gösterir</li>
@@ -32,7 +34,16 @@ Aynı menü üzerinden doküman silme, güncelleme ve istatisklerine de bakabili
 <h1>Temel işlemler</h1>
 
 <h2>1) Insert (Kayıt ekleme)</h2>
+<code>
 
+db.getCollection('Test').insert({
+    Name:"Berk",
+    CityId:32,
+    CreatedAt:ISODate("1986-06-15")
+})
+
+//db.getSiblingDb("DBName").getCollection("colname") //... ile mevcut kullandığınız database'den farklı bir DB'de işlem yapabilirsiniz.
+</code>
 <h2>2) Find</h2>
 
 <h3>a) Classical</h3>
