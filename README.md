@@ -174,25 +174,28 @@ MongoClient mc=new MongoClient("mongodb://1.1.1.1); //uzak sunucuda kurulu olan 
 
 
 <h2>2) Insert BsonDocument</h2>
-
+```
         MongoClient mc = new MongoClient();
         var db = mc.GetDatabase("Test");
         var col = db.GetCollection<BsonDocument>("Brand");
         var brand = new BsonDocument { { "Id", 2 }, { "Name", "test" },{"CityId",0 };
         col.InsertOne(brand);
+```
 
 <h2>3) Insert Poco</h2>
+```
  public class Brand
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int CityId { get; set; }
     }
-            MongoClient mc = new MongoClient();
-            var db = mc.GetDatabase("Test");
-            var col = db.GetCollection<Brand>("Brand");
-            var brand = new Brand { Id = 67, Name = "test" };
-            col.InsertOne(brand);
+    MongoClient mc = new MongoClient();
+    var db = mc.GetDatabase("Test");
+    var col = db.GetCollection<Brand>("Brand");
+    var brand = new Brand { Id = 67, Name = "test",CityId=3 };
+    col.InsertOne(brand);
+```
 
 <h2>4) Find</h2>
 
