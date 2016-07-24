@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@{ 
+    var posts = ViewBag.Posts as List<MongoDB.Bson.BsonDocument>;
+
+    foreach (var item in posts)
+    {
+       <h1>@item["Title"].ToString()</h1>
+    }
+}
+
