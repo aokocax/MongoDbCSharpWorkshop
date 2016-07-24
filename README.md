@@ -5,9 +5,9 @@ https://www.mongodb.com/download-center?jmp=nav
 <h1>Temel mongodb işlemleri</h1>
 
 <h2>Terminal üzerinden </h2>
-Sunucu üzerinden daha çok GUI'e sahip istemciler kullansak da terminal üzerinden de MongoDB'yi çalıştırabileceğiniz. 
-Daha iyi anlamak adına temel terminal komutlarını sıralayalım.
-Windows sunucuları üzerinde mongodb c:\programfiles\mongodb\server\3.x\bin dizininde kuruluyor. 
+Sunucu üzerinden daha çok GUI'e sahip istemciler kullansak da terminal üzerinden de MongoDB'yi çalıştırabilirsiniz. 
+Daha iyi anlamak adına temel terminal komutlarını sıralayalım.<br>
+Windows sunucuları üzerinde mongodb c:\programfiles\mongodb\server\3.x\bin dizininde kuruluyor. <br>
 mongod.exe dosyasını çalıştırarak serveri başlattıktan sonra mongo.exe'yi çalıştırarak terminal üzerinden mongodb komut setlerini girebilirsiniz.
 
 <ul>
@@ -20,6 +20,7 @@ mongod.exe dosyasını çalıştırarak serveri başlattıktan sonra mongo.exe'y
 
  
 <h2>GUI için Robomongo</h2>
+
 https://robomongo.org/download
 
 Sunucuya sağ tıklayıp Create Database'yi seçerek DB oluşturabilirsiniz.
